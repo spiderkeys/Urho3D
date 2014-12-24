@@ -388,7 +388,7 @@ def makefile_ci
   # Create a new project on the fly that uses newly installed Urho3D SDK
   install_destination = ENV['LINUX'] || ENV['WINDOWS'] || ENV['OSX'] ? "DESTDIR=~ && export URHO3D_HOME=#{ENV['WINDOWS'] ? `find ~/usr/${MINGW_PREFIX##*/} -type d -name local`.chomp : '~/usr/local'}" : ''
   scaffolding "../Build/generated/UsingSDK"
-  system "cd ../Build && make -j$NUMJOBS install >/dev/null #{install_destination} && cd ../Build/generated/UsingSDK && echo '\nExternal project referencing Urho3D SDK' && ./cmake_generic.sh . #{$build_options} -DURHO3D_LUA#{jit}=1 -DURHO3D_TESTING=#{$testing} -DCMAKE_BUILD_TYPE=#{$configuration} && make -j$NUMJOBS #{test}" or abort 'Failed to configure/build/test temporary project using Urho3D as external library'
+  system "cd ../Build && make -j$NUMJOBS install #{install_destination} && cd ../Build/generated/UsingSDK && echo '\nExternal project referencing Urho3D SDK' && ./cmake_generic.sh . #{$build_options} -DURHO3D_LUA#{jit}=1 -DURHO3D_TESTING=#{$testing} -DCMAKE_BUILD_TYPE=#{$configuration} && make -j$NUMJOBS #{test}" or abort 'Failed to configure/build/test temporary project using Urho3D as external library'
   # Make, deploy, and test run Android APK in an Android (virtual) device
   if ENV['AVD'] && !ENV['PACKAGE_UPLOAD']
     system "echo '\nTest deploying and running Urho3D Samples APK...' && cd ../Build && android update project -p . -t $( android list target |grep android-$API |cut -d ' ' -f2 ) && ant debug" or abort 'Failed to make Urho3D Samples APK'
