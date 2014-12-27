@@ -344,10 +344,20 @@ public:
     
     /// Return iterator to the beginning.
     Iterator Begin() { return Iterator(Buffer()); }
+
+	/// Return iterator to the beginning.
+	Iterator begin() { return Iterator( Buffer() ); }
+
     /// Return const iterator to the beginning.
     ConstIterator Begin() const { return ConstIterator(Buffer()); }
+
+
     /// Return iterator to the end.
     Iterator End() { return Iterator(Buffer() + size_); }
+
+	/// Return iterator to the end.
+	Iterator end() { return Iterator( Buffer() + size_ ); }
+
     /// Return const iterator to the end.
     ConstIterator End() const { return ConstIterator(Buffer() + size_); }
     /// Return first element.
